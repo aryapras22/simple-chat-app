@@ -2,12 +2,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { ChatRooms } from '@/components/chat-rooms';
-import { Paperclip, Send } from 'lucide-react';
+import { FileIcon, Paperclip, Send, Video, Image } from 'lucide-react';
 import { DEFAULT_SENDER } from '@/data/data-handler';
 import RoomAvatar from '@/components/room-avatar';
 import { Button } from '@/components/ui/button';
 import { ChatRoomData } from '@/types/data-types';
 import ChatMessages from './chat-bubble/chat-messages';
+import { Popover, PopoverContent } from './ui/popover';
+import { PopoverTrigger } from '@radix-ui/react-popover';
 
 export const Chat = ({
   room,
@@ -25,6 +27,38 @@ export const Chat = ({
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chats]);
+
+  const handleFileUpload = (type: 'image' | 'video' | 'file') => {
+    const input = document.createElement('input');
+    input.type = 'file';
+
+    if (type === 'image') {
+      input.accept = 'image/*';
+    } else if (type === 'video') {
+      input.accept = 'video/*';
+    } else {
+      input.accept = '*/*';
+    }
+
+    input.onchange = (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (!file) return;
+
+      // data not saved on db btw
+      const fileUrl = URL.createObjectURL(file);
+
+      const comment = {
+        id: chats[chats.length - 1].id + 1,
+        type: type,
+        message: fileUrl,
+        sender: DEFAULT_SENDER,
+      };
+
+      setChats((chats) => [...chats, comment]);
+    };
+
+    input.click();
+  };
 
   const handleSendMessage = () => {
     if (!message.trim()) return;
@@ -110,9 +144,49 @@ export const Chat = ({
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
             />
-            <Button variant={'outline'}>
-              <Paperclip className="h-5 w-5" />
-            </Button>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline">
+                  <Paperclip className="h-5 w-5" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent
+                className="w-48 p-2"
+                align="end"
+                side="top"
+                sideOffset={5}
+              >
+                <div className="flex flex-col gap-1">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="flex justify-start items-center gap-2 w-full"
+                    onClick={() => handleFileUpload('image')}
+                  >
+                    <Image className="h-4 w-4" />
+                    <span>Image</span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="flex justify-start items-center gap-2 w-full"
+                    onClick={() => handleFileUpload('video')}
+                  >
+                    <Video className="h-4 w-4" />
+                    <span>Video</span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="flex justify-start items-center gap-2 w-full"
+                    onClick={() => handleFileUpload('file')}
+                  >
+                    <FileIcon className="h-4 w-4" />
+                    <span>File</span>
+                  </Button>
+                </div>
+              </PopoverContent>
+            </Popover>
             <Button onClick={handleSendMessage} disabled={!message.trim()}>
               <Send className="h-5 w-5" />
             </Button>
