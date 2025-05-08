@@ -1,8 +1,6 @@
 'use client';
-import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React from 'react';
 import RoomAvatar from './room-avatar';
 
 type RoomCardProps = {
@@ -22,7 +20,7 @@ export const RoomCard = ({
 }: RoomCardProps) => {
   const path = usePathname();
   const style = {
-    background: path.startsWith(`/rooms/${id}`) ? 'bg-gray-50' : '',
+    background: path.startsWith(`/rooms/${id}`) ? 'bg-gray-100' : '',
   };
   return (
     <div

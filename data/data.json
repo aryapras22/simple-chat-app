@@ -58,7 +58,7 @@
     },
     {
       "room": {
-        "name": "Product A",
+        "name": "Product B",
         "id": 12457,
         "image_url": "",
         "participant": [
@@ -109,6 +109,24 @@
           "type": "text",
           "message": "Baik, silahkan kirimkan lampiran bukti pembayarannya",
           "sender": "agent@mail.com"
+        },
+        {
+          "id": 885517,
+          "type": "image",
+          "message": "/placeholder.jpeg",
+          "sender": "customer@mail.com"
+        },
+        {
+          "id": 885518,
+          "type": "video",
+          "message": "/Lorem_Ipsum_video.mp4",
+          "sender": "agent@mail.com"
+        },
+        {
+          "id": 885519,
+          "type": "file",
+          "message": "/lorem_ipsum.pdf",
+          "sender": "customer@mail.com"
         }
       ]
     },
@@ -124,8 +142,8 @@
             "role": 0
           },
           {
-            "id": "arya@mail.com",
-            "name": "arya",
+            "id": "customer@mail.com",
+            "name": "king customer",
             "role": 2
           }
         ]
@@ -135,7 +153,7 @@
           "id": 885512,
           "type": "text",
           "message": "Selamat malam",
-          "sender": "arya@mail.com"
+          "sender": "customer@mail.com"
         },
         {
           "id": 885513,
@@ -153,7 +171,7 @@
           "id": 885515,
           "type": "text",
           "message": "Saya ingin mengirimkan bukti pembayaran, karena diaplikasi selalu gagal",
-          "sender": "arya@mail.com"
+          "sender": "customer@mail.com"
         }
       ]
     }

@@ -1,20 +1,34 @@
+'use server';
 import { ChatRooms } from '@/components/chat-rooms';
+import { Loading } from '@/components/loading';
+import { getAllData } from '@/data/data-handler';
+import { ApiResponse } from '@/types/data-types';
+import { Suspense } from 'react';
 
-export default function Home() {
+export default async function HomePage() {
+  const data = await getAllData();
   return (
-    <div className="flex h-screen bg-white dark:bg-slate-950">
-      <div className="w-full md:w-1/3 lg:w-1/4 border-r border-slate-200 dark:border-slate-800 overflow-y-auto">
+    <Suspense fallback={<Loading />}>
+      <HomeContent data={data} />
+    </Suspense>
+  );
+}
+
+function HomeContent({ data }: { data: ApiResponse }) {
+  return (
+    <div className="flex h-screen bg-white ">
+      <div className="w-full md:w-1/3 lg:w-1/4 border-r border-slate-200  overflow-y-auto">
         <div className="p-4">
-          <ChatRooms />
+          <ChatRooms rooms={data.results} />
         </div>
       </div>
 
-      <div className="hidden md:flex flex-1 flex-col items-center justify-center bg-slate-50 dark:bg-slate-900">
+      <div className="hidden md:flex flex-1 flex-col items-center justify-center bg-slate-50 ">
         <div className="max-w-md text-center p-6">
-          <div className="rounded-full bg-slate-100 dark:bg-slate-800 p-6 w-20 h-20 flex items-center justify-center mx-auto mb-6">
+          <div className="rounded-full bg-slate-100  p-6 w-20 h-20 flex items-center justify-center mx-auto mb-6">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-10 w-10 text-slate-400 dark:text-slate-500"
+              className="h-10 w-10 text-slate-400 "
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -27,10 +41,10 @@ export default function Home() {
               />
             </svg>
           </div>
-          <h2 className="text-xl font-medium text-slate-900 dark:text-slate-50 mb-2">
+          <h2 className="text-xl font-medium text-slate-900  mb-2">
             No chat selected
           </h2>
-          <p className="text-slate-500 dark:text-slate-400">
+          <p className="text-slate-500 ">
             Select a conversation from the sidebar to start chatting or create a
             new one.
           </p>

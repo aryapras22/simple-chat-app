@@ -1,11 +1,8 @@
-import React from 'react';
+import { ChatRoomData } from '@/types/data-types';
 import { RoomCard } from './room-card';
-import { mockdata } from '@/data/data-handler';
 import { Label } from '@radix-ui/react-label';
 
-const rooms = mockdata.results;
-
-export const ChatRooms = () => {
+export const ChatRooms = ({ rooms }: { rooms: ChatRoomData[] }) => {
   return (
     <div>
       <h1>
@@ -14,9 +11,32 @@ export const ChatRooms = () => {
       <div className="flex flex-col gap-1">
         {rooms.map((room) => {
           const roomId = room.room.id;
-          const name = room.room.name;
+          let name = room.room.name;
           const image_url = room.room.image_url;
-          const last_chat = room.comments[room.comments.length - 1];
+          let last_chat = room.comments[room.comments.length - 1];
+          const sender = room.room.participant.find(
+            (part) => part.id === last_chat.sender
+          )?.name;
+
+          if (sender) {
+            last_chat.sender = sender;
+          }
+
+          if (room.room.participant.length === 2) {
+            const room_receiver = room.room.participant.find(
+              (part) => part.id === room.room.name
+            );
+            name = room_receiver?.name || '';
+          }
+
+          if (last_chat.type === 'image') {
+            last_chat.message = `sending an image.`;
+          } else if (last_chat.type === 'video') {
+            last_chat.message = `sending a video.`;
+          } else if (last_chat.type === 'file') {
+            last_chat.message = `sending a file.`;
+          }
+
           return (
             <RoomCard
               key={roomId}
