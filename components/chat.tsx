@@ -1,5 +1,6 @@
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { ChatRooms } from '@/components/chat-rooms';
 import { Paperclip, Send } from 'lucide-react';
 import { DEFAULT_SENDER } from '@/data/data-handler';
@@ -16,17 +17,13 @@ export const Chat = ({
   rooms: ChatRoomData[];
 }) => {
   const [message, setMessage] = useState('');
-  const chatContainerRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const current_active_user = DEFAULT_SENDER;
   const [chats, setChats] = useState(room.comments);
   const room_metadata = room.room;
 
   useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop =
-        chatContainerRef.current.scrollHeight;
-    }
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [chats]);
 
   const handleSendMessage = () => {
@@ -91,8 +88,8 @@ export const Chat = ({
           </div>
         </div>
 
-        <div
-          ref={chatContainerRef}
+        <ScrollArea
+          type="scroll"
           className="flex-1 overflow-y-auto p-4 bg-slate-50 "
         >
           <ChatMessages
@@ -100,7 +97,8 @@ export const Chat = ({
             current_active_user={DEFAULT_SENDER}
             room={room}
           />
-        </div>
+          <div ref={messagesEndRef} />
+        </ScrollArea>
 
         <div className="border-t border-slate-200  p-4 bg-white ">
           <div className="flex gap-2">
@@ -112,21 +110,10 @@ export const Chat = ({
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
             />
-            <Button
-              variant={'outline'}
-              className="p-2 rounded-md text-slate-500 hover:text-slate-600   hover:bg-slate-100  transition-colors"
-            >
+            <Button variant={'outline'}>
               <Paperclip className="h-5 w-5" />
             </Button>
-            <Button
-              className={`p-2 rounded-md transition-colors ${
-                message.trim()
-                  ? 'bg-slate-900 text-white hover:bg-slate-800 '
-                  : 'bg-gray-800 text-slate-400 cursor-not-allowed '
-              }`}
-              onClick={handleSendMessage}
-              disabled={!message.trim()}
-            >
+            <Button onClick={handleSendMessage} disabled={!message.trim()}>
               <Send className="h-5 w-5" />
             </Button>
           </div>

@@ -1,7 +1,6 @@
 import { FileIcon } from 'lucide-react';
 
 export const FileBubble = ({ data }: { data: string }) => {
-  console.log(data);
   const fileName = data.split('/').pop() || 'File';
 
   return (

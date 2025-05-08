@@ -1,5 +1,6 @@
 import mockdata from './data.json';
 
+
 export function getData(id: number): any {
   const room = mockdata.results.find((room) => room.room.id === id) || {
     room: {

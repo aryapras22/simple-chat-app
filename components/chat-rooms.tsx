@@ -29,12 +29,14 @@ export const ChatRooms = ({ rooms }: { rooms: ChatRoomData[] }) => {
             name = room_receiver?.name || '';
           }
 
+          let message_placeholder = last_chat.message;
+
           if (last_chat.type === 'image') {
-            last_chat.message = `sending an image.`;
+            message_placeholder = `sending an image.`;
           } else if (last_chat.type === 'video') {
-            last_chat.message = `sending a video.`;
+            message_placeholder = `sending a video.`;
           } else if (last_chat.type === 'file') {
-            last_chat.message = `sending a file.`;
+            message_placeholder = `sending a file.`;
           }
 
           return (
@@ -44,6 +46,7 @@ export const ChatRooms = ({ rooms }: { rooms: ChatRoomData[] }) => {
               name={name}
               image_url={image_url}
               last_chat={last_chat}
+              message_placeholder={message_placeholder}
             />
           );
         })}

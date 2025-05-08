@@ -3,5 +3,9 @@ type TextBubbleProps = {
 };
 
 export const TextBubble = ({ data }: TextBubbleProps) => {
-  return <div className="wrap-anywhere min-w-20">{data}</div>;
+  return (
+    <p className="px-3 py-2 break-words whitespace-pre-wrap hyphens-auto">
+      {data}
+    </p>
+  );
 };

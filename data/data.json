@@ -123,10 +123,22 @@
           "sender": "agent@mail.com"
         },
         {
-          "id": 885519,
+          "id": 885520,
           "type": "file",
-          "message": "/lorem_ipsum.pdf",
+          "message": "/Lorem_ipsum.pdf",
+          "sender": "agent@mail.com"
+        },
+        {
+          "id": 885521,
+          "type": "file",
+          "message": "/Lorem_ipsum.pdf",
           "sender": "customer@mail.com"
+        },
+        {
+          "id": 885522,
+          "type": "image",
+          "message": "https://picsum.photos/id/237/200/300",
+          "sender": "admin@mail.com"
         }
       ]
     },

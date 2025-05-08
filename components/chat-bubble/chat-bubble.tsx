@@ -36,7 +36,7 @@ export const ChatBubble = memo(
           place === 'right' ? 'items-end' : 'items-start'
         } `}
       >
-        <span className="text-xs font-medium text-slate-500  mb-1 ml-2">
+        <span className="text-xs font-medium text-slate-500  mb-1">
           {sender}
         </span>
 
@@ -46,9 +46,7 @@ export const ChatBubble = memo(
           }`}
         >
           <div
-            className={`max-w-[75%] rounded-xl ${
-              isMediaBubble ? 'p-0 overflow-hidden' : 'px-4 py-2'
-            } ${
+            className={`max-w-[75vw] md:max-w-[50vw] rounded-xl ${
               place === 'right'
                 ? `bg-slate-900 text-white  ${
                     !isMediaBubble && 'rounded-tr-none'

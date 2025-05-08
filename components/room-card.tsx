@@ -8,6 +8,7 @@ type RoomCardProps = {
   name: string;
   image_url: string;
   last_chat: any;
+  message_placeholder: string;
   className?: string;
 };
 
@@ -16,6 +17,7 @@ export const RoomCard = ({
   name,
   image_url,
   last_chat,
+  message_placeholder,
   className = '',
 }: RoomCardProps) => {
   const path = usePathname();
@@ -37,7 +39,7 @@ export const RoomCard = ({
 
             <p className="text-sm text-gray-600 truncate">
               <span className="font-medium">{last_chat.sender}</span>:{' '}
-              {last_chat.message}
+              {message_placeholder}
             </p>
           </Link>
         </div>
