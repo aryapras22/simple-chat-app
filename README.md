@@ -27,8 +27,7 @@
 ## 🛠️ Getting Started
 
 To run this project locally:
-
-1. **Clone the repository**
+**Clone the repository**
    ```bash
    git clone https://github.com/aryapras22/simple-chat-app.git
    cd simple-chat-app
